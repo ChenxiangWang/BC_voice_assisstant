@@ -2,6 +2,7 @@
 
 ## 配置列表 (主要参照snowboy开发文档)
 - 系统ubuntu 14.04.06，可从163镜像下载
+- Python 2.7.3
 - 依赖包：
   1. sudo apt-get install python-pyaudio python3-pyaudio sox
   2. pip install pyaudio
