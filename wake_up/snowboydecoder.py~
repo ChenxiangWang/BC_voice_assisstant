@@ -144,7 +144,7 @@ class HotwordDetector(object):
               sleep_time=0.03,
               audio_recorder_callback=None,
               silent_count_threshold=15,
-              recording_timeout=70):
+              recording_timeout=100):
         """
         Start the voice detector. For every `sleep_time` second it checks the
         audio buffer for triggering keywords. If detected, then call
