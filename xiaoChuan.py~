@@ -1,8 +1,19 @@
-import snowboydecoder
+"""
+Main changes:
+	1. Set a default model 'nihao.pmdl'
+	2. DetectedCallBack would invoke a welcome
+        3. AudioRecorderCallback, use baidu ASR-API.
+        4. sensitivity chenged to 0.75
+Modified from demo4.by Chenxiang Wang , 2020-4-25
+"""
+
+import wake_up.snowboydecoder as snowboydecoder
 import sys
 import signal
 import speech_recognition as sr
 import os
+import bd_api.asr as asr
+import jd_api.jd as jd
 
 """
 This demo file shows you how to use the new_message_callback to interact with
@@ -16,30 +27,22 @@ https://pypi.python.org/pypi/SpeechRecognition/
 
 interrupted = False
 
-
+#TODO - ARS
 def audioRecorderCallback(fname):
-    print "converting audio to text"
-    r = sr.Recognizer()
-    with sr.AudioFile(fname) as source:
-        audio = r.record(source)  # read the entire audio file
-    # recognize speech using Google Speech Recognition
-    try:
-        # for testing purposes, we're just using the default API key
-        # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
-        # instead of `r.recognize_google(audio)`
-        print(r.recognize_google(audio))
-    except sr.UnknownValueError:
-        print "Google Speech Recognition could not understand audio"
-    except sr.RequestError as e:
-        print "Could not request results from Google Speech Recognition service; {0}".format(e)
-
+    print('Recognizing...\n')
+    rsp = asr.baidu_asr(fname)
+    rst = rsp.split('[', 1)[1]
+    rst = rst.split(']', 1)[0]
+    print (rst)
+    print (jd.classify(rst))
     os.remove(fname)
 
 
-
+#TODO - feedback
 def detectedCallback():
-  sys.stdout.write("recording audio...")
-  sys.stdout.flush()
+    snowboydecoder.play_audio_file()
+    sys.stdout.flush()
+    sys.stdout.write("recording audio...\n")
 
 def signal_handler(signal, frame):
     global interrupted
@@ -50,16 +53,12 @@ def interrupt_callback():
     global interrupted
     return interrupted
 
-#if len(sys.argv) == 1:
-#    print "Error: need to specify model name"
-#    print "Usage: python demo.py your.model"
-#    sys.exit(-1)
 model = 'resources/nihao.pmdl'
 
 # capture SIGINT signal, e.g., Ctrl+C
 signal.signal(signal.SIGINT, signal_handler)
 
-detector = snowboydecoder.HotwordDetector(model, sensitivity=0.38)
+detector = snowboydecoder.HotwordDetector(model, sensitivity=0.5)
 print "Listening... Press Ctrl+C to exit"
 
 # main loop

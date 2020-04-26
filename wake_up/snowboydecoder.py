@@ -241,7 +241,12 @@ class HotwordDetector(object):
 
                 if stopRecording == True:
                     fname = self.saveMessage()
-                    audio_recorder_callback(fname)
+                    # if Hunman voice founded, call API - Chenxiang
+                    if HUMAN_FOUND:
+                        audio_recorder_callback(fname)
+                    else:
+                        os.remove(fname)
+                        print "NO voice\n"
                     state = "PASSIVE"
                     continue
 

@@ -40,9 +40,9 @@ def audioRecorderCallback(fname):
 
 #TODO - feedback
 def detectedCallback():
-    snowboydecoder.play_audio_file()
-    sys.stdout.write("recording audio...")
     sys.stdout.flush()
+    snowboydecoder.play_audio_file()
+    sys.stdout.write("recording audio...\n")
 
 def signal_handler(signal, frame):
     global interrupted
