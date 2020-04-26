@@ -11,7 +11,7 @@
   2. pip install pyaudio
 - 官网下载 swig3.0.10(+)
 
-## 问题解决
+## 常见问题
 - Python.h: No such file or directory的错误出现
 可执行sudo apt-get install python-dev
 
