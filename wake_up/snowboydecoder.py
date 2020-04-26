@@ -1,4 +1,8 @@
-#!/usr/bin/env python
+"""
+### Main changes from origin files:
+### 1. Change the start of counting silence, make it start counting after the human voice detected.
+### Modified by Chenxiang Wang, 2020-4-26
+"""
 
 import collections
 import pyaudio
@@ -18,6 +22,10 @@ TOP_DIR = os.path.dirname(os.path.abspath(__file__))
 RESOURCE_FILE = os.path.join(TOP_DIR, "resources/common.res")
 DETECT_DING = os.path.join(TOP_DIR, "resources/ding.wav")
 DETECT_DONG = os.path.join(TOP_DIR, "resources/dong.wav")
+
+## A flag to indicate wheather hunman voice has been detected in 'Active' mode. 
+## By Chenxiang
+HUMAN_FOUND = False
 
 def py_error_handler(filename, line, function, err, fmt):
     pass
@@ -56,7 +64,6 @@ class RingBuffer(object):
 def play_audio_file(fname=DETECT_DING):
     """Simple callback function to play a wave file. By default it plays
     a Ding sound.
-
     :param str fname: wave file name
     :return: None
     """
@@ -80,7 +87,6 @@ class HotwordDetector(object):
     """
     Snowboy decoder to detect whether a keyword specified by `decoder_model`
     exists in a microphone input stream.
-
     :param decoder_model: decoder model file path, a string or a list of strings
     :param resource: resource file path.
     :param sensitivity: decoder sensitivity, a float of a list of floats.
@@ -144,7 +150,7 @@ class HotwordDetector(object):
               sleep_time=0.03,
               audio_recorder_callback=None,
               silent_count_threshold=15,
-              recording_timeout=70):
+              recording_timeout=100):
         """
         Start the voice detector. For every `sleep_time` second it checks the
         audio buffer for triggering keywords. If detected, then call
@@ -152,7 +158,6 @@ class HotwordDetector(object):
         function (single model) or a list of callback functions (multiple
         models). Every loop it also calls `interrupt_check` -- if it returns
         True, then breaks from the loop and return.
-
         :param detected_callback: a function or list of functions. The number of
                                   items must match the number of models in
                                   `decoder_model`.
@@ -218,19 +223,21 @@ class HotwordDetector(object):
 
                     if audio_recorder_callback is not None:
                         state = "ACTIVE"
+                        HUMAN_FOUND = False ## Enter 'ACTIVE' mode, Human not found -By Chenxiang
                     continue
 
             elif state == "ACTIVE":
                 stopRecording = False
                 if recordingCount > recording_timeout:
                     stopRecording = True
-                elif status == -2: #silence found
+                elif status == -2 and HUMAN_FOUND: #silence found after Human voice detected - By 
                     if silentCount > silent_count_threshold:
                         stopRecording = True
                     else:
                         silentCount = silentCount + 1
                 elif status == 0: #voice found
-                    silentCount = 0
+                    if not HUMAN_FOUND:
+                        HUMAN_FOUND=True
 
                 if stopRecording == True:
                     fname = self.saveMessage()
