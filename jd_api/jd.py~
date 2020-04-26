@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import wx_sdk
+import base64
 def classify_T (text):
     url = 'https://aiapi.jd.com/jdai/garbageTextSearch'
     params = { 

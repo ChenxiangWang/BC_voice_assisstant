@@ -14,7 +14,7 @@ import speech_recognition as sr
 import os
 import bd_api.asr as asr
 import jd_api.jd as jd
-
+import shutil
 """
 This demo file shows you how to use the new_message_callback to interact with
 the recorded audio after a keyword is spoken. It uses the speech recognition
@@ -30,18 +30,19 @@ interrupted = False
 #TODO - ARS
 def audioRecorderCallback(fname):
     print('Recognizing...\n')
-    rsp = asr.baidu_asr(fname)
-    rst = rsp.split('[', 1)[1]
-    rst = rst.split(']', 1)[0]
-    print (rst)
-    print (jd.classify(rst))
+    #rsp = asr.baidu_asr(fname)
+    #rst = rsp.split('[', 1)[1]
+    #rst = rst.split(']', 1)[0]
+    #print (rst)
+    #print (jd.classify(rst))
+    
+    print(jd.classify_v(fname))
     os.remove(fname)
-
 
 #TODO - feedback
 def detectedCallback():
-    snowboydecoder.play_audio_file()
     sys.stdout.flush()
+    snowboydecoder.play_audio_file()
     sys.stdout.write("recording audio...\n")
 
 def signal_handler(signal, frame):
@@ -59,7 +60,7 @@ model = 'resources/nihao.pmdl'
 signal.signal(signal.SIGINT, signal_handler)
 
 detector = snowboydecoder.HotwordDetector(model, sensitivity=0.5)
-print "Listening... Press Ctrl+C to exit"
+print "Listening... Press Ctrl+C/Z to exit"
 
 # main loop
 detector.start(detected_callback=detectedCallback,
