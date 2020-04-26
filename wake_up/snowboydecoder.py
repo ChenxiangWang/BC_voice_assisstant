@@ -149,8 +149,8 @@ class HotwordDetector(object):
               interrupt_check=lambda: False,
               sleep_time=0.03,
               audio_recorder_callback=None,
-              silent_count_threshold=15,
-              recording_timeout=100):
+              silent_count_threshold=2,
+              recording_timeout=70):
         """
         Start the voice detector. For every `sleep_time` second it checks the
         audio buffer for triggering keywords. If detected, then call
@@ -223,21 +223,26 @@ class HotwordDetector(object):
 
                     if audio_recorder_callback is not None:
                         state = "ACTIVE"
-                        HUMAN_FOUND = False ## Enter 'ACTIVE' mode, Human not found -By Chenxiang
+                        HUMAN_FOUND = False ## Enter 'ACTIVE' mode(h.w detected), Human not found -By Chenxiang
                     continue
 
             elif state == "ACTIVE":
                 stopRecording = False
                 if recordingCount > recording_timeout:
                     stopRecording = True
-                elif status == -2 and HUMAN_FOUND: #silence found after Human voice detected - By 
+                elif status == -2 and HUMAN_FOUND: #silence found after Human voice detected - By Chenxiang
                     if silentCount > silent_count_threshold:
                         stopRecording = True
                     else:
                         silentCount = silentCount + 1
                 elif status == 0: #voice found
+                    # found human voice, set flag - By Chenxiang
                     if not HUMAN_FOUND:
-                        HUMAN_FOUND=True
+			HUMAN_FOUND=True
+                        # if the voice was found at end of the reording_window, extend the window. - By Chenxiang
+                        if recordingCount >= 3/4*recording_timeout:
+                            recordingCount = 0                            
+
 
                 if stopRecording == True:
                     fname = self.saveMessage()
@@ -249,7 +254,6 @@ class HotwordDetector(object):
                         print "NO voice\n"
                     state = "PASSIVE"
                     continue
-
                 recordingCount = recordingCount + 1
                 self.recordedData.append(data)
 
