@@ -7,7 +7,7 @@ Main changes:
 Modified from demo4.by Chenxiang Wang , 2020-4-25
 """
 
-import wake_up.snowboydecoder as snowboydecoder
+from wake_up import snowboydecoder as snowboydecoder
 import sys
 import signal
 import speech_recognition as sr
@@ -30,13 +30,13 @@ interrupted = False
 #TODO - ARS
 def audioRecorderCallback(fname):
     print('Recognizing...\n')
-    #rsp = asr.baidu_asr(fname)
-    #rst = rsp.split('[', 1)[1]
-    #rst = rst.split(']', 1)[0]
-    #print (rst)
-    #print (jd.classify(rst))
+    rsp = asr.baidu_asr(fname)
+    rst = rsp.split('[', 1)[1]
+    rst = rst.split(']', 1)[0]
+    print (rst)
+    print (jd.classify_T(rst))
     
-    print(jd.classify_V(fname))
+    #print(jd.classify_V(fname))
     os.remove(fname)
 
 #TODO - feedback
@@ -60,7 +60,7 @@ model = 'resources/nihao.pmdl'
 signal.signal(signal.SIGINT, signal_handler)
 
 detector = snowboydecoder.HotwordDetector(model, sensitivity=0.5)
-print "Listening... Press Ctrl+C/Z to exit"
+print ("Listening... Press Ctrl+C/Z to exit")
 
 # main loop
 detector.start(detected_callback=detectedCallback,

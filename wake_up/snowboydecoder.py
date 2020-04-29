@@ -6,7 +6,7 @@
 
 import collections
 import pyaudio
-import snowboydetect
+from . import snowboydetect
 import time
 import wave
 import os
@@ -238,7 +238,7 @@ class HotwordDetector(object):
                 elif status == 0: #voice found
                     # found human voice, set flag - By Chenxiang
                     if not HUMAN_FOUND:
-			HUMAN_FOUND=True
+                        HUMAN_FOUND=True
                         # if the voice was found at end of the reording_window, extend the window. - By Chenxiang
                         if recordingCount >= 3/4*recording_timeout:
                             recordingCount = 0                            
@@ -251,7 +251,7 @@ class HotwordDetector(object):
                         audio_recorder_callback(fname)
                     else:
                         os.remove(fname)
-                        print "NO voice\n"
+                        print ("NO voice\n")
                     state = "PASSIVE"
                     continue
                 recordingCount = recordingCount + 1
