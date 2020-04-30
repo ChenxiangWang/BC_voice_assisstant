@@ -1,12 +1,10 @@
 # BC_voice_assisstant
-## API
-- Snowboy(语音唤醒)
-- 百度语音识别 ASR
-- jd云垃圾分类（需要配合wx_sdk）
+## 功能（待更新）
 
 ## 配置列表 
 - Deitpi os
 - Python 3.4
+- 百度云语音识别API，京东云垃圾分类识别API
 - 依赖包：
   1. sudo apt-get install python-pyaudio python3-pyaudio sox
   2. pip3 install pyaudio
