@@ -5,14 +5,15 @@
 - jd云垃圾分类（需要配合wx_sdk）
 
 ## 配置列表 
-- 系统ubuntu 14.04.06，可从163镜像下载
-- Python 2.7.3
+- Deitpi os
+- Python 3.4
 - 依赖包：
   1. sudo apt-get install python-pyaudio python3-pyaudio sox
-  2. pip install pyaudio
+  2. pip3 install pyaudio
   3. wx_sdk，可从pip网站直接下载，放入jd_api里直接引用
-  4. 版本需要较新的，原则上是swig3.0.10(+)，版本太低会报缺少编译支持文件
+  4. swig3.0.10(+)，版本太低会报缺少编译支持文件
 ## 硬件配置（待）
+    Orange Pi zero lte. and extention board
 ## 功能（待）
 ## API内核主要改动
 为适应本项目，对Snowboy python内核做出了一些改动。
@@ -28,8 +29,9 @@
  - 改动后：
    1. 静默时长 从 人声检测到后开始计时
    2. 声音从探测到人声时，开始录音。
-## 常见问题
+## 常见问题解决办法
 - Python.h: No such file or directory的错误出现
-可执行sudo apt-get install python-dev
+可执行sudo apt-get install python3-dev
 
 - 新装系统缺少g++，需要安装gcc/g++5.0+ 
+- 关键文件：_snowboydetect.so,该文件为交叉编译（C++&&python）自动生成的文件，若报缺失错误，可在snowboy原文档下的swig文档里，从新编译（根据系统编译）
