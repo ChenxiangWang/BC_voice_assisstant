@@ -10,6 +10,7 @@
   2. pip3 install pyaudio
   3. wx_sdk，可从pip网站直接下载，放入jd_api里直接引用
   4. swig3.0.10(+)，版本太低会报缺少编译支持文件
+  5. snowboy 项目其他所依赖文件
 ## 硬件配置（待）
     Orange Pi zero lte. and extention board
 ## 功能（待）
