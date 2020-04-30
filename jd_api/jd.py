@@ -24,4 +24,4 @@ def classify_V (fname):
     with open(fname, 'rb') as speech_file:
         speech_data = speech_file.read()
     response = wx_sdk.wx_post_req( url, params,bodyStr=speech_data)
-    return( response.text )encode("utf-8").decode("latin1")
+    return( response.text).encode("utf-8").decode("latin1")

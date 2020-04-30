@@ -10,7 +10,7 @@ Modified from demo4.by Chenxiang Wang , 2020-4-25
 from wake_up import snowboydecoder as snowboydecoder
 import sys
 import signal
-import speech_recognition as sr
+#import speech_recognition as sr
 import os
 import bd_api.asr as asr
 import jd_api.jd as jd
