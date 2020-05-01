@@ -252,7 +252,7 @@ class HotwordDetector(object):
                     else:
                         os.remove(fname)
                         print('No voice')
-                        play_audio_file('resources/6.wav')
+                        play_audio_file('audio/6.wav')
                     state = "PASSIVE"
                     continue
                 recordingCount = recordingCount + 1
