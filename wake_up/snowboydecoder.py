@@ -26,7 +26,8 @@ DETECT_DONG = os.path.join(TOP_DIR, "resources/dong.wav")
 ## A flag to indicate wheather hunman voice has been detected in 'Active' mode. 
 ## By Chenxiang
 HUMAN_FOUND = False
-
+RCD = False
+    
 def py_error_handler(filename, line, function, err, fmt):
     pass
 
@@ -235,7 +236,7 @@ class HotwordDetector(object):
                         stopRecording = True
                     else:
                         silentCount = silentCount + 1
-                elif status == 0: #voice found
+                elif status == 0 and RCD == True: #voice found
                     # found human voice, set flag - By Chenxiang
                     print("recording audio...\n")
                     if not HUMAN_FOUND:

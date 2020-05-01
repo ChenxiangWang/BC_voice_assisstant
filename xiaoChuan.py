@@ -72,6 +72,7 @@ def detectedCallback():
     # play 'welcome' audio.
     snowboydecoder.play_audio_file('audio/1.wav')
     sys.stdout.flush()
+    snowboydecoder.RCD = True
     #sys.stdout.write("recording audio...\n")
 
 def signal_handler(signal, frame):
