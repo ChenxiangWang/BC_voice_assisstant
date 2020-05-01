@@ -237,6 +237,7 @@ class HotwordDetector(object):
                         silentCount = silentCount + 1
                 elif status == 0: #voice found
                     # found human voice, set flag - By Chenxiang
+                    sys.stdout.write("recording audio...\n")
                     if not HUMAN_FOUND:
                         HUMAN_FOUND=True
                         # if the voice was found at end of the reording_window, extend the window. - By Chenxiang

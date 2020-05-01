@@ -72,7 +72,7 @@ def detectedCallback():
     sys.stdout.flush()
     # play 'welcome' audio.
     snowboydecoder.play_audio_file('audio/1.wav')
-    sys.stdout.write("recording audio...\n")
+    #sys.stdout.write("recording audio...\n")
 
 def signal_handler(signal, frame):
     global interrupted
