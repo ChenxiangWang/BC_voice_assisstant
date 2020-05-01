@@ -15,6 +15,8 @@ import os
 import bd_api.asr as asr
 import jd_api.jd as jd
 import shutil
+import json
+import threading
 """
 This demo file shows you how to use the new_message_callback to interact with
 the recorded audio after a keyword is spoken. It uses the speech recognition
@@ -26,23 +28,50 @@ https://pypi.python.org/pypi/SpeechRecognition/
 
 
 interrupted = False
+def recognize_text(fname):
 
-#TODO - ARS
+    thread1 = threading.Thread(target = snowboydecoder.play_audio_file,args=('audio/8.wav',))
+    thread1.start()
+    
+    r_baidu = asr.baidu_asr(fname)
+    sentence = json.loads(r_baidu)['result'][0]
+    print(sentence)
+    #get result from JD.
+    r_jd = json.loads(jd.classify_T(sentence))['result']
+    #status code
+    status = r_jd['status']
+    thread1.join()
+    try:
+        garbage_info = r_jd['garbage_info']
+        cate_name = garbage_info[0]['cate_name']
+        ps = garbage_info[0]['ps']
+        #print (cate_name)
+        if cate_name == '可回收物':
+            snowboydecoder.play_audio_file('audio/2.wav')
+        elif cate_name == '湿垃圾':
+            snowboydecoder.play_audio_file('audio/3.wav')
+        elif cate_name == '干垃圾':
+            snowboydecoder.play_audio_file('audio/4.wav')
+        elif cate_name == '有害垃圾':
+            snowboydecoder.play_audio_file('audio/5.wav')
+    except:
+        snowboydecoder.play_audio_file('audio/7.wav')
+        
 def audioRecorderCallback(fname):
     print('Recognizing...\n')
-    rsp = asr.baidu_asr(fname)
-    rst = rsp.split('[', 1)[1]
-    rst = rst.split(']', 1)[0]
-    print (rst)
-    print (jd.classify_T(rst))
-    
-    #print(jd.classify_V(fname))
+    recognize_text(fname)
     os.remove(fname)
+    
+#def audioRecorderCallback2(fname):
+#    print('Recognizing...\n')    
+#    print(jd.classify_V(fname))
+#    os.remove(fname)
 
 #TODO - feedback
 def detectedCallback():
     sys.stdout.flush()
-    snowboydecoder.play_audio_file()
+    # play 'welcome' audio.
+    snowboydecoder.play_audio_file('audio/1.wav')
     sys.stdout.write("recording audio...\n")
 
 def signal_handler(signal, frame):
@@ -69,7 +98,5 @@ detector.start(detected_callback=detectedCallback,
                sleep_time=0.01)
 
 detector.terminate()
-
-
 
 
