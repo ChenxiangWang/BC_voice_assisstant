@@ -40,7 +40,9 @@ def recognize_text(fname):
     r_jd = json.loads(jd.classify_T(sentence))['result']
     #status code
     status = r_jd['status']
+    #threand1: play the welcome vedio
     thread1.join()
+    snowboydecoder.RCD = True
     try:
         garbage_info = r_jd['garbage_info']
         cate_name = garbage_info[0]['cate_name']
@@ -72,7 +74,6 @@ def detectedCallback():
     # play 'welcome' audio.
     snowboydecoder.play_audio_file('audio/1.wav')
     sys.stdout.flush()
-    snowboydecoder.RCD = True
     #sys.stdout.write("recording audio...\n")
 
 def signal_handler(signal, frame):
