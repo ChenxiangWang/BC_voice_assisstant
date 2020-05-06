@@ -91,7 +91,7 @@ model = 'resources/nihao.pmdl'
 # capture SIGINT signal, e.g., Ctrl+C
 signal.signal(signal.SIGINT, signal_handler)
 
-detector = snowboydecoder.HotwordDetector(model, sensitivity=0.5)
+detector = snowboydecoder.HotwordDetector(model, sensitivity=0.4)
 print ("Listening... Press Ctrl+C/Z to exit")
 
 # main loop
