@@ -40,6 +40,7 @@ def recognize_text(fname):
     r_jd = json.loads(jd.classify_T(sentence))['result']
     #status code
     status = r_jd['status']
+    thread1.join()
     try:
         garbage_info = r_jd['garbage_info']
         cate_name = garbage_info[0]['cate_name']
