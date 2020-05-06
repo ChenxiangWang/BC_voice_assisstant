@@ -54,6 +54,7 @@ def recognize_text(fname):
             snowboydecoder.play_audio_file('audio/4.wav')
         elif cate_name == '有害垃圾':
             snowboydecoder.play_audio_file('audio/5.wav')
+        snowboydecoder.play_audio_file('wake_up/resources/dong.wav')
     except:
         snowboydecoder.play_audio_file('audio/7.wav')
         
