@@ -221,7 +221,7 @@ class HotwordDetector(object):
                     callback = detected_callback[status-1]
                     if callback is not None:
                         callback()
-                        time.sleep(500)
+                        #time.sleep(500)
                     if audio_recorder_callback is not None:
                         state = "ACTIVE"
                         HUMAN_FOUND = False ## Enter 'ACTIVE' mode(h.w detected), Human not found -By Chenxiang
