@@ -13,6 +13,7 @@ import os
 import logging
 from ctypes import *
 from contextlib import contextmanager
+import threading
 
 logging.basicConfig()
 logger = logging.getLogger("snowboy")
@@ -26,7 +27,6 @@ DETECT_DONG = os.path.join(TOP_DIR, "resources/dong.wav")
 ## A flag to indicate wheather hunman voice has been detected in 'Active' mode. 
 ## By Chenxiang
 HUMAN_FOUND = False
-PLAYING = False
     
 def py_error_handler(filename, line, function, err, fmt):
     pass
@@ -68,7 +68,6 @@ def play_audio_file(fname=DETECT_DING):
     :param str fname: wave file name
     :return: None
     """
-    PLAYING = True
     ding_wav = wave.open(fname, 'rb')
     ding_data = ding_wav.readframes(ding_wav.getnframes())
     with no_alsa_error():
@@ -83,7 +82,6 @@ def play_audio_file(fname=DETECT_DING):
     stream_out.stop_stream()
     stream_out.close()
     audio.terminate()
-    PLAYING = False
 
 class HotwordDetector(object):
     """
@@ -196,9 +194,6 @@ class HotwordDetector(object):
 
         state = "PASSIVE"
         while True:
-        
-            if PLAYING == True:
-                continue
                 
             if interrupt_check():
                 logger.debug("detect voice break")
@@ -225,7 +220,9 @@ class HotwordDetector(object):
                     logger.info(message)
                     callback = detected_callback[status-1]
                     if callback is not None:
-                        callback()
+                        thread1 = threading.Thread(target = callback)
+                        thread1.start()
+                        thread1.join()
 
                     if audio_recorder_callback is not None:
                         state = "ACTIVE"
