@@ -69,9 +69,7 @@ def audioRecorderCallback(fname):
 #TODO - feedback
 def detectedCallback():
     # play 'welcome' audio.
-    thread1 = threading.Thread(target = snowboydecoder.play_audio_file,args=('audio/1.wav',))
-    thread1.start()
-    thread1.join()
+    play_audio_file('wake_up/resources/7.wav')
     sys.stdout.flush()
     snowboydecoder.RCD = True
     #sys.stdout.write("recording audio...\n")
