@@ -221,7 +221,7 @@ class HotwordDetector(object):
                     callback = detected_callback[status-1]
                     if callback is not None:
                         callback()
-                        snowboydecoder.RCD = True
+                        RCD = True
 
                     if audio_recorder_callback is not None:
                         state = "ACTIVE"
