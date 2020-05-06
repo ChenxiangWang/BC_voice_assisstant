@@ -17,6 +17,7 @@ import jd_api.jd as jd
 import shutil
 import json
 import threading
+import time
 """
 This demo file shows you how to use the new_message_callback to interact with
 the recorded audio after a keyword is spoken. It uses the speech recognition
@@ -72,6 +73,7 @@ def audioRecorderCallback(fname):
 def detectedCallback():
     # play 'welcome' audio.
     snowboydecoder.play_audio_file('wake_up/resources/ding.wav')
+    time.sleep(0.2)
     sys.stdout.flush()
     #sys.stdout.write("recording audio...\n")
 

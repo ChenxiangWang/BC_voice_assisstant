@@ -151,7 +151,7 @@ class HotwordDetector(object):
               interrupt_check=lambda: False,
               sleep_time=0.03,
               audio_recorder_callback=None,
-              silent_count_threshold=2,
+              silent_count_threshold=10,
               recording_timeout=70):
         """
         Start the voice detector. For every `sleep_time` second it checks the
