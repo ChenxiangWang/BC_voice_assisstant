@@ -24,9 +24,9 @@
    （6）. 无人应答时
    （7）. 无法回答提问
    （8）. 正在查询音
-   - jd_api: 京东api
-   - baidu_api:百度api
-   - snowboy：热词唤醒
+ - jd_api: 京东api
+ - baidu_api:百度api
+ - snowboy：热词唤醒
 ## API内核主要改动
 为适应本项目，对Snowboy python内核做出了一些改动。
  - 改动动机：
