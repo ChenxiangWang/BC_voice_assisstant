@@ -85,13 +85,11 @@ def signal_handler(signal, frame):
 def interrupt_callback():
     global interrupted
     return interrupted
-
 model = 'resources/nihao2.pmdl'
-
 # capture SIGINT signal, e.g., Ctrl+C
 signal.signal(signal.SIGINT, signal_handler)
 
-detector = snowboydecoder.HotwordDetector(model, sensitivity=0.5)
+detector = snowboydecoder.HotwordDetector(model, sensitivity=0.35)
 print ("Listening... Press Ctrl+C/Z to exit")
 
 # main loop
