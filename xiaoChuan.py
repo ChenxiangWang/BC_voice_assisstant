@@ -87,7 +87,6 @@ def interrupt_callback():
     return interrupted
 
 model = 'resources/nihao.pmdl'
-
 # capture SIGINT signal, e.g., Ctrl+C
 signal.signal(signal.SIGINT, signal_handler)
 
